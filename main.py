@@ -1,5 +1,4 @@
-import lzma,base64,struct,os
-import json as J
+import lzma,base64,struct,os,json as J
 from itertools import count as C,accumulate
 from collections import namedtuple as T
 CT={"Content-Type":"application/json"}
@@ -61,8 +60,7 @@ def fp(fen):
  p=fen.split();P9=' '*9
  s=P9+'\n'+P9+'\n'+''.join(' '+''.join('.'*int(c)if c.isdigit()else c for c in r)+'\n' for r in p[0].split('/'))+P9+'\n'+P9+' '
  o=Z(s,0,('K' in p[2],'Q' in p[2]),('k' in p[2],'q' in p[2]),0,0)
- if p[1]=='b':o=o.ro()
- return o
+ return o.ro() if p[1]=='b' else o
 tp={}
 def bo(o,g,x):
  global NN;NN+=1;e=tp.get(o)
@@ -80,7 +78,7 @@ def bo(o,g,x):
  if x>0 and best<=-M and null>-M:best=0
  if not e or x>=e[0]and best>=g:
   tp[o]=x,best,g,bm
-  if len(tp)>4e5:tp.clear()
+  if len(tp)>2e6:tp.clear()
  return best
 def se(o,mx):
  global NN;NN=0;sc=0;BM=0
@@ -96,7 +94,7 @@ def se(o,mx):
  return BM,sc
 def ok(p,m):return isinstance(m,tuple)and'k'not in[p.mv(m).b[m2[1]] for m2 in p.mv(m).gm()]
 def c0(fen):
- p=fp(fen);m,sc=se(p,55000)
+ p=fp(fen);m,sc=se(p,200000)
  if m is None or not ok(p,m):m=next(m2 for m2 in sorted(p.gm(),key=p.va,reverse=1)if ok(p,m2))
  i,j=m
  if fen.split()[1]=='b':i,j=119-i,119-j
