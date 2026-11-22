@@ -78,7 +78,7 @@ def bo(o,g,x):
  if x>0 and best<=-M and null>-M:best=0
  if not e or x>=e[0]and best>=g:
   tp[o]=x,best,g,bm
-  if len(tp)>2e6:tp.clear()
+  if len(tp)>4e5:tp.clear()
  return best
 def se(o,mx):
  global NN;NN=0;sc=0;BM=0
@@ -94,7 +94,7 @@ def se(o,mx):
  return BM,sc
 def ok(p,m):return isinstance(m,tuple)and'k'not in[p.mv(m).b[m2[1]] for m2 in p.mv(m).gm()]
 def c0(fen):
- p=fp(fen);m,sc=se(p,80000)
+ p=fp(fen);m,sc=se(p,55000)
  if m is None or not ok(p,m):m=next(m2 for m2 in sorted(p.gm(),key=p.va,reverse=1)if ok(p,m2))
  i,j=m
  if fen.split()[1]=='b':i,j=119-i,119-j
